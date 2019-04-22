@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<ImageView
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:src="@drawable/profilepicture"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:id="@+id/Tweet_ProfilePicture"
+    />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/Tweet_ProfilePicture"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/fallingskybd"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:id="@+id/Tweet_Name"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/fallingsky"
+        android:layout_below="@+id/Tweet_Name"
+        android:id="@+id/Tweet_ScreenName"
+        android:layout_toRightOf="@+id/Tweet_ProfilePicture"
+        android:layout_marginLeft="24dp"
+        />
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/Tweet_ProfilePicture"
+        android:textColor="@color/black"
+        android:layout_below="@+id/Tweet_ScreenName"
+        android:id="@+id/Tweet_TweetText"
+        android:layout_marginTop="10dp"/>
+         <ImageView
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:id="@+id/Tweet_TweetPhoto"
+        android:layout_below="@+id/Tweet_TweetText"
+        android:layout_centerHorizontal="true"
+        />
+
+    <RelativeLayout
+        android:id="@+id/Tweetbar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/Tweet_TweetPhoto"
+        android:layout_marginTop="11dp">
+
+        <ImageView
+            android:id="@+id/Tweet_RetweetsIcon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_repeat_black_24dp" />
+
+        <TextView
+            android:id="@+id/Tweet_RetweetsNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/Tweet_RetweetsIcon"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/Tweet_RepliesIcon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="70dp"
+            android:layout_toRightOf="@id/Tweet_RetweetsNumber"
+            android:src="@drawable/ic_message_black_24dp" />
+
+        <TextView
+            android:id="@+id/Tweet_RepliesNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/Tweet_RepliesIcon"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/Tweet_LikesIcon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="70dp"
+            android:layout_toRightOf="@id/Tweet_RepliesNumber"
+            android:src="@drawable/ic_star_black_24dp" />
+
+        <TextView
+            android:id="@+id/Tweet_LikesNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/Tweet_LikesIcon"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/Tweetbar"
+        android:background="@color/grey"
+        android:layout_marginBottom="3dp"></LinearLayout>
+</RelativeLayout>

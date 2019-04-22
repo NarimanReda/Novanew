@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="125dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Profile">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/profilepicture"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/ImageView_Profile_ProfilePicture"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ImageView_Profile_ProfilePicture"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:fontFamily="@font/fallingskybd"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:id="@+id/TextView_Profile_Name"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/fallingsky"
+        android:layout_below="@+id/TextView_Profile_Name"
+        android:id="@+id/TextView_Profile_ScreenName"
+        android:layout_toRightOf="@+id/ImageView_Profile_ProfilePicture"
+        android:layout_marginLeft="24dp"
+        android:textColorHighlight="@color/grey"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/fallingsky"
+        android:layout_below="@+id/ImageView_Profile_ProfilePicture"
+        android:layout_toRightOf="@+id/ImageView_Profile_ProfilePicture"
+        android:id="@+id/TextView_Profile_Bio"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="5dp"
+        />
+
+
+    <Button
+        android:id="@+id/Button_Profile_Follow"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:text="Follow"
+        android:background="@drawable/buttonwhite"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/fallingskybd"
+        android:textSize="15dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/ImageView_Profile_ProfilePicture"
+        android:background="@color/grey">
+
+    </LinearLayout>
+
+</RelativeLayout>

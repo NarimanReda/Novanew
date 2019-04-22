@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/lightgrey">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="2dp"
+        android:src="@drawable/ic_account_circle_black_24dp"/>
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/profilepicture"
+        android:layout_marginTop="5dp"
+        android:id="@+id/ImageView_FollowerNotifications"
+        android:layout_marginLeft="50dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:layout_marginLeft="60dp"
+        android:fontFamily="@font/fallingskybd"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/ImageView_FollowerNotifications"
+        android:id="@+id/TextView_FollowersNotifications_FollowerName"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/TextView_FollowersNotifications_FollowerName"
+        android:text="@string/FollowersNotification"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:layout_below="@+id/ImageView_FollowerNotifications"
+        android:fontFamily="@font/fallingsky"
+        android:textColor="@color/black"
+        />
+
+
+
+</RelativeLayout>

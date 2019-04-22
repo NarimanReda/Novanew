@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="95dp"
+    android:layout_height="50dp"
+    android:background="@color/lightgrey">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Profile"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/fallingskybd"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:id="@+id/TextView_Search_ProfileTab"/>
+</RelativeLayout>

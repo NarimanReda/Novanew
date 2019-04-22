@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Search"
+    android:background="@color/lightgrey">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:id="@+id/RelativeLayout_Search_ToolBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Search"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            android:fontFamily="@font/fallingskybd"
+            android:id="@+id/TextView_Search_title"/>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/TextView_Notifications_title"
+            android:background="@drawable/profilepicture" />
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_chevron_left_black_24dp"
+            android:id="@+id/TextView_Search_back"
+            android:layout_marginLeft="300dp"
+            android:text="@string/Back"
+            android:layout_marginTop="15dp"
+            android:background="@color/lightgrey"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            android:fontFamily="@font/fallingskybd" />
+
+
+        <EditText
+            android:id="@+id/EditText_Search_SearchKeyword"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="80dp"
+            android:layout_below="@+id/TextView_Search_title"
+            android:hint="Search Nova"
+            />
+
+        <TextView
+            android:id="@+id/TextView_Search_SearchLogo"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="30dp"
+            android:text="Search"
+            android:layout_below="@+id/TextView_Search_title"
+            android:layout_toRightOf="@+id/EditText_Search_SearchKeyword"
+            android:background="@color/lightgrey"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp"
+            android:fontFamily="@font/fallingskybd" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RelativeLayout_Notifications_Container"
+        android:layout_below="@id/RelativeLayout_Search_ToolBar"
+        android:background="@color/lightgrey">
+
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:id="@+id/TabLayout_Search_Tab"
+            android:background="@color/lightgrey"
+            ></android.support.design.widget.TabLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/ViewPager_Notification"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/TabLayout_Search_Tab"
+            android:layout_marginTop="0dp"></android.support.v4.view.ViewPager>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="200dp"
+    android:background="@drawable/posttweet"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/editprofile_cancel"
+        android:textColor="@color/colorPrimary"
+        android:fontFamily="@font/fallingskybd"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20dp"
+        android:id="@+id/textview_posttweet_cancel"
+        />
+
+    <Button
+        android:id="@+id/textview_posttweet_tweet"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:text="@string/Tweet"
+        android:background="@drawable/button"
+        android:textColor="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:fontFamily="@font/fallingskybd"
+        android:textSize="15dp"
+        />
+
+
+
+        <EditText
+
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:hint="@string/WhatsHappening"
+            android:gravity="top"
+            android:textColorHint="@color/grey"
+            android:id="@+id/EditText_Posttweet"
+            android:layout_below="@id/textview_posttweet_cancel"
+            android:fontFamily="@font/fallingsky"
+            android:textColor="@color/black"
+
+            />
+
+
+</RelativeLayout>

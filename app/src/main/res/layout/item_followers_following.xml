@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:background="@color/lightgrey"
+    >
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/Image_Following_Followers_Photo"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/profilepicture" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TextView_Following_Followers_Name"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="35dp"
+        android:fontFamily="@font/fallingskybd"
+        android:text="Ahmed Ashraf"
+        android:textSize="25dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextView_Following_Followers_Name"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="5dp"
+        android:text="'@Ahmed Ashraf"
+        android:textSize="20dp"
+        android:fontFamily="@font/fallingsky"
+        android:id="@+id/TextView_Following_Followers_Username"
+
+        />
+
+</RelativeLayout>
