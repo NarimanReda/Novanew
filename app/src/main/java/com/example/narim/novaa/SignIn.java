@@ -136,7 +136,7 @@ public class SignIn extends AppCompatActivity {
                                  verified=user.getBoolean("verified");
                                  location=user.getString("location");
                                  bio=user.getString("bio");
-                                 followerscount=user.getInt("followers_Count");
+                                 followerscount=user.getInt("followers_count");
                                  friendscount=user.getInt("friends_count");
                                  favoritescount=user.getInt("favorites_count");
                                  novascount=user.getInt("novas_count");
@@ -184,7 +184,7 @@ public class SignIn extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Intent i = new Intent(SignIn.this, Profile.class);
+                            Intent i = new Intent(SignIn.this, ProfilePage.class);
                             i.putExtra("token",token);
                             i.putExtra("verified",verified);
                             i.putExtra("location",location);
@@ -209,6 +209,8 @@ public class SignIn extends AppCompatActivity {
                             i.putExtra("FavoritesList",FavoritesList);
                             i.putExtra("MentionsList",MentionsList);
                             startActivity(i);
+                            Log.e("name",name);
+                            Log.e("screenname",screenname);
                         }
                     }
                 },

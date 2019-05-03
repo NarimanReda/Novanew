@@ -88,9 +88,7 @@ EditText tweettext;
 
                         try {
                             Gson gson = new Gson();
-                            SignInResponse wrapper = gson.fromJson(response, SignInResponse.class);
-                            SignInResult signInResult= wrapper.getUser();
-                            Log.e("someOtherrrrr", response);
+                             Log.e("someOtherrrrr", response);
                             //Log.e("result",signInResult.getToken());
                            /*if (wrapper.getStatus()==200) {
                                SignInResult signInResult= wrapper.getResult();
@@ -123,7 +121,8 @@ EditText tweettext;
                 }) {
 
             @Override
-            public byte[] getBody() throws AuthFailureError {
+            public byte[] getBody() throws AuthFailureError
+            {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("text",tweettext.getText().toString());
                 return new JSONObject(params).toString().getBytes();
