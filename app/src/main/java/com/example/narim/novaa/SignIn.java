@@ -10,15 +10,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SignIn extends AppCompatActivity {
@@ -52,9 +58,7 @@ public class SignIn extends AppCompatActivity {
                     //Toast.makeText(SignIn.this, "Please Enter Valid Password",Toast.LENGTH_SHORT).show();
                 else {
                     getData();
-                Intent intent = new Intent(SignIn.this,HomePage.class);
-                 startActivity(intent);
-                 finish();}
+                }
             }
         }); SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,14 +102,69 @@ public class SignIn extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        try {
+                        if (response != null) {
                             Gson gson = new Gson();
-                            SignInResponse wrapper = gson.fromJson(response, SignInResponse.class);
-                            SignInResult signInResult= wrapper.getUser();
-                           Log.e("someOtherrrrr", response);
+                            Log.e("res", response);
+                            JSONObject reader = null;
+                            String token,location,bio,profileimageurl,id,name,email,password,screenname,notifId;
+                            int followerscount,friendscount,favoritscount,novascount,__v;
+                          /*  try {
+                                reader = new JSONObject(response.toString());
+                                String token = reader.getString("token");
+                                JSONObject user=reader.getJSONObject("user");
+                                boolean verified=user.getBoolean("verified");
+                                String location=user.getString("location");
+                                String bio=user.getString("bio");
+                                int followerscount=user.getInt("followers_Count");
+                                int friendscount=user.getInt("friends_count");
+                                int favoritescount=user.getInt("favorites_count");
+                                int novascount=user.getInt("novas_count");
+                                JSONArray novasIDs= user.getJSONArray("novas_IDs");
+                                ArrayList<String> NovasIds=new ArrayList<>();
+                                for(int i=0;i<novasIDs.length();i++)
+                                {
+                                    NovasIds.add(novasIDs.getString(i));
+                                }
+                                JSONArray favoritenovasIDs=user.getJSONArray("favorites_novas_IDs");
+                                ArrayList<String> favoriteIds=new ArrayList<>();
+                                for(int i=0;i<favoritenovasIDs.length();i++)
+                                {
+                                    favoriteIds.add(favoritenovasIDs.getString(i));
+                                }
+                                String profileimageurl=user.getString("profile_image_url");
+                                Boolean default_profile_image=user.getBoolean("default_profile_image");
+                                String id=user.getString("_id");
+                                String name=user.getString("name");
+                                String email=user.getString("email");
+                                String password=user.getString("password");
+                                String screenname=user.getString("screen_name");
+                                String created_at=user.getString("created_at");
+                                int __v=user.getInt("__v");
+                                JSONObject NotifObject=user.getJSONObject("notification_object");
+                                String notifId=NotifObject.getString("_id");
+                                JSONArray novasList=NotifObject.getJSONArray("renova_list");
+                                ArrayList<String> NovasList=new ArrayList<>();
+                                for(int i=0;i<novasList.length();i++)
+                                {
+                                    NovasList.add(novasList.getString(i));
+                                }
+                                JSONArray favoritesList=NotifObject.getJSONArray("favorite_list");
+                                ArrayList<String> FavoritesList=new ArrayList<>();
+                                for(int i=0;i<favoritesList.length();i++)
+                                {
+                                    FavoritesList.add(favoritesList.getString(i));
+                                }
+                                JSONArray mention_list =NotifObject.getJSONArray("mention_list");
+                                ArrayList<String> MentionsList=new ArrayList<>();
+                                for(int i=0;i<mention_list.length();i++)
+                                {
+                                    MentionsList.add(mention_list.getString(i));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             Intent i = new Intent(SignIn.this, HomePage.class);
-                            i.putExtra("token",wrapper.getToken());
+                            i.putExtra("token",token);
                             i.putExtra("name",signInResult.getName());
                             i.putExtra("screenname",signInResult.getScreen_name());
                             i.putExtra("verified",signInResult.getVerified());
@@ -116,27 +175,9 @@ public class SignIn extends AppCompatActivity {
                             i.putExtra("id",signInResult.get_id());
                             i.putExtra("email",signInResult.getEmail());
                             startActivity(i);
+                            */
                             //Log.e("result",signInResult.getToken());
 
-                           /*if (wrapper.getStatus()==200) {
-                               SignInResult signInResult= wrapper.getResult();
-                                Log.e("result",signInResult.getToken());
-                            } else {
-                                if(wrapper.getMessage()=="UserNotFound")
-                                {
-                                    Toast.makeText(SignIn.this,"User not found",Toast.LENGTH_LONG).show();
-                                }
-                                else if(wrapper.getMessage()=="IncorrectPassword")
-                                {
-                                    Toast.makeText(SignIn.this,"IncorrectPassword", Toast.LENGTH_LONG).show();
-                                }
-                           }*/
-                        } catch (Exception e) {
-                            //commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
-                            //e.printStackTrace();
-                            Log.e("someOther", response);
-
-                            //   Log.e("name",wrapper.UserObject.getName());
 
                         }
                     }
@@ -144,7 +185,20 @@ public class SignIn extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            JSONObject JO = null;
+                            try {
+                                JO = new JSONObject(jsonError);
+                                String msg= JO.getString("msg");
+                                Toast.makeText(SignIn.this,msg,Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Log.e("errormessage",jsonError);
+
+                        }
                     }
                 }) {
 
@@ -176,7 +230,6 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void retry(VolleyError error) throws VolleyError {
                 error.printStackTrace();
-                //commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
             }
         });
 

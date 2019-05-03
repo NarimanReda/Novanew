@@ -11,13 +11,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -208,8 +211,6 @@ public class SignUp extends AppCompatActivity {
               {
                     getData();
                   Intent intent = new Intent(SignUp.this,HomePage.class);
-                  startActivity(intent);
-                  finish();
               }
 
             }
@@ -234,15 +235,22 @@ public class SignUp extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                       // try {
-                            Log.e("success","yes");
+                        if (response != null) {
                             Gson gson = new Gson();
-                            SignUpResponse wrapper = gson.fromJson(response, SignUpResponse.class);
-                            SignUpResult signUpResult=wrapper.getUser();
                             Log.e("res", response);
-                            //  Log.e("id", wrapper.getName());
-                            //}
-                            Intent i = new Intent(SignUp.this, HomePage.class);
+                            JSONObject reader = null;
+                            try {
+                                reader = new JSONObject(response.toString());
+                                JSONObject user = reader.getJSONObject("user");
+                                String name = user.getString("name");
+                                if(name!=null)
+                                {
+                                    Toast.makeText(SignUp.this,"Check email for verification then Sign In",Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            /*Intent i = new Intent(SignUp.this, HomePage.class);
                             i.putExtra("token",wrapper.getToken());
                             i.putExtra("name",signUpResult.getName());
                             i.putExtra("screenname",signUpResult.getScreen_name());
@@ -253,22 +261,36 @@ public class SignUp extends AppCompatActivity {
                             i.putExtra("novasCount",signUpResult.getNovas_count());
                             i.putExtra("id",signUpResult.get_id());
                             i.putExtra("email",signUpResult.getEmail());
-                            startActivity(i);
-                            // Log.e("email",signUpResult.getEmail());
-                             //Log.e("screenname",signUpResult.getScreen_name());
-                              //Log.e("name",signUpResult.getName());
-                        //} catch (Exception e) {
+                            startActivity(i);*/
+                            //Log.e("email",signUpResult.getEmail());
+                            //Log.e("screenname",signUpResult.getScreen_name());
+
+                            // Log.e("name",signUpResult.getName());
+                            //} catch (Exception e) {
                             //commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
-                          //  e.printStackTrace();
-                            Log.e("someOther", response);
-                        //}
+                            //  e.printStackTrace();
+                            //}
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        // commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
+                            NetworkResponse networkResponse = error.networkResponse;
+                            if (networkResponse != null && networkResponse.data != null) {
+                                String jsonError = new String(networkResponse.data);
+                                JSONObject JO = null;
+                                try {
+                                    JO = new JSONObject(jsonError);
+                                    String msg= JO.getString("msg");
+                                    Toast.makeText(SignUp.this,msg,Toast.LENGTH_LONG).show();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.e("errormessage",jsonError);
+
+                        }
                     }
                 })
 
