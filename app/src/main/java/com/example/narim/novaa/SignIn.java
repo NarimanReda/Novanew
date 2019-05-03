@@ -106,79 +106,109 @@ public class SignIn extends AppCompatActivity {
                             Gson gson = new Gson();
                             Log.e("res", response);
                             JSONObject reader = null;
-                            String token,location,bio,profileimageurl,id,name,email,password,screenname,notifId;
-                            int followerscount,friendscount,favoritscount,novascount,__v;
-                          /*  try {
+                            String token="";
+                            String created_at="";
+                            String location="";
+                            String bio="";
+                            String profileimageurl="";
+                            String id="";
+                            String name="";
+                            String email="";
+                            String password="";
+                            String screenname="";
+                            String notifId="";
+                            int followerscount=0;
+                            int friendscount=0;
+                            int favoritescount=0;
+                            int novascount=0;
+                            int __v=0;
+                            boolean verified=true;
+                            boolean default_profile_image=true;
+                            String[]NovasIDS=new String[0];
+                            String[] NovasList=new String[0];
+                            String[] favoriteIds=new String[0];
+                            String[] FavoritesList=new String[0];
+                            String[] MentionsList=new String[0];
+                            try {
                                 reader = new JSONObject(response.toString());
-                                String token = reader.getString("token");
+                                token = reader.getString("token");
                                 JSONObject user=reader.getJSONObject("user");
-                                boolean verified=user.getBoolean("verified");
-                                String location=user.getString("location");
-                                String bio=user.getString("bio");
-                                int followerscount=user.getInt("followers_Count");
-                                int friendscount=user.getInt("friends_count");
-                                int favoritescount=user.getInt("favorites_count");
-                                int novascount=user.getInt("novas_count");
+                                 verified=user.getBoolean("verified");
+                                 location=user.getString("location");
+                                 bio=user.getString("bio");
+                                 followerscount=user.getInt("followers_Count");
+                                 friendscount=user.getInt("friends_count");
+                                 favoritescount=user.getInt("favorites_count");
+                                 novascount=user.getInt("novas_count");
                                 JSONArray novasIDs= user.getJSONArray("novas_IDs");
-                                ArrayList<String> NovasIds=new ArrayList<>();
+                                NovasIDS=new String[novasIDs.length()];
                                 for(int i=0;i<novasIDs.length();i++)
                                 {
-                                    NovasIds.add(novasIDs.getString(i));
+                                    NovasIDS[i]=novasIDs.getString(i);
                                 }
                                 JSONArray favoritenovasIDs=user.getJSONArray("favorites_novas_IDs");
-                                ArrayList<String> favoriteIds=new ArrayList<>();
+                                favoriteIds=new String[favoritenovasIDs.length()];
                                 for(int i=0;i<favoritenovasIDs.length();i++)
                                 {
-                                    favoriteIds.add(favoritenovasIDs.getString(i));
+                                    favoriteIds[i]=favoritenovasIDs.getString(i);
                                 }
-                                String profileimageurl=user.getString("profile_image_url");
-                                Boolean default_profile_image=user.getBoolean("default_profile_image");
-                                String id=user.getString("_id");
-                                String name=user.getString("name");
-                                String email=user.getString("email");
-                                String password=user.getString("password");
-                                String screenname=user.getString("screen_name");
-                                String created_at=user.getString("created_at");
-                                int __v=user.getInt("__v");
+                                 profileimageurl=user.getString("profile_image_url");
+                                 default_profile_image=user.getBoolean("default_profile_image");
+                                 id=user.getString("_id");
+                                 name=user.getString("name");
+                                 email=user.getString("email");
+                                 password=user.getString("password");
+                                 screenname=user.getString("screen_name");
+                                 created_at=user.getString("created_at");
+                                __v=user.getInt("__v");
                                 JSONObject NotifObject=user.getJSONObject("notification_object");
-                                String notifId=NotifObject.getString("_id");
+                                 notifId=NotifObject.getString("_id");
                                 JSONArray novasList=NotifObject.getJSONArray("renova_list");
-                                ArrayList<String> NovasList=new ArrayList<>();
+                                NovasList=new String[novasList.length()];
                                 for(int i=0;i<novasList.length();i++)
                                 {
-                                    NovasList.add(novasList.getString(i));
+                                    NovasList[i]=novasList.getString(i);
                                 }
                                 JSONArray favoritesList=NotifObject.getJSONArray("favorite_list");
-                                ArrayList<String> FavoritesList=new ArrayList<>();
+                                FavoritesList=new String[favoritesList.length()];
                                 for(int i=0;i<favoritesList.length();i++)
                                 {
-                                    FavoritesList.add(favoritesList.getString(i));
+                                    FavoritesList[i]=favoritesList.getString(i);
                                 }
                                 JSONArray mention_list =NotifObject.getJSONArray("mention_list");
-                                ArrayList<String> MentionsList=new ArrayList<>();
+                                MentionsList=new String[mention_list.length()];
                                 for(int i=0;i<mention_list.length();i++)
                                 {
-                                    MentionsList.add(mention_list.getString(i));
+                                    MentionsList[i]=mention_list.getString(i);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Intent i = new Intent(SignIn.this, HomePage.class);
+                            Intent i = new Intent(SignIn.this, Profile.class);
                             i.putExtra("token",token);
-                            i.putExtra("name",signInResult.getName());
-                            i.putExtra("screenname",signInResult.getScreen_name());
-                            i.putExtra("verified",signInResult.getVerified());
-                            i.putExtra("followersCount",signInResult.getFollowers_count());
-                            i.putExtra("favoritesCount",signInResult.getFavorites_count());
-                            i.putExtra("friendsCount",signInResult.getFriends_count());
-                            i.putExtra("novasCount",signInResult.getNovas_count());
-                            i.putExtra("id",signInResult.get_id());
-                            i.putExtra("email",signInResult.getEmail());
+                            i.putExtra("verified",verified);
+                            i.putExtra("location",location);
+                            i.putExtra("bio",bio);
+                            i.putExtra("followerscount",followerscount);
+                            i.putExtra("friendscount",friendscount);
+                            i.putExtra("favoritescount",favoritescount);
+                            i.putExtra("novascount",novascount);
+                            i.putExtra("novasids",NovasIDS);
+                            i.putExtra("favoriteIDs",favoriteIds);
+                            i.putExtra("profileimageurl",profileimageurl);
+                            i.putExtra("defaultprofileimage",default_profile_image);
+                            i.putExtra("id",id);
+                            i.putExtra("name",name);
+                            i.putExtra("email",email);
+                            i.putExtra("password",password);
+                            i.putExtra("screenname",screenname);
+                            i.putExtra("createdat",created_at);
+                            i.putExtra("__v",__v);
+                            i.putExtra("NotifID",notifId);
+                            i.putExtra("NovasList",NovasList);
+                            i.putExtra("FavoritesList",FavoritesList);
+                            i.putExtra("MentionsList",MentionsList);
                             startActivity(i);
-                            */
-                            //Log.e("result",signInResult.getToken());
-
-
                         }
                     }
                 },
