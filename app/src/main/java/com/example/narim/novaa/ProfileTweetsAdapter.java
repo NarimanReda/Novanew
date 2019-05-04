@@ -1,5 +1,8 @@
 package com.example.narim.novaa;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,13 +10,51 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 
 public class ProfileTweetsAdapter extends RecyclerView.Adapter<ProfileTweetsAdapter.myViewHolder>{
     List<Tweets> Tweets;
-    public ProfileTweetsAdapter(List<Tweets> tweets)
-    {this.Tweets= tweets;}
+    Context context;
+    public ProfileTweetsAdapter(List<Tweets> tweets, Context context)
+    {this.Tweets= tweets;
+    this.context=context;
+    }
+
+    SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(context);
+    String response = m.getString(" response", " response");
+     JSONObject reader;
+    String in_reply_to_status_id="";
+    String in_reply_to_user_id="";
+    String in_reply_to_screen_name="";
+    String user="";
+    int reply_count=0;
+    int renova_count=0;
+    int favorite_count=0;
+    //String[] favorited_by_IDs=new String[0];
+    Boolean renovaed=false;
+    String _id="";
+    
+    {
+
+        try {
+      reader = new JSONObject(response.toString());
+            JSONArray array=reader.getJSONArray("");
+            for(int i=0; i<array.length(); i++){
+                 JSONObject c = array.getJSONObject(i);
+                 in_reply_to_status_id= c.getString("in_reply_to_status_id");
+                in_reply_to_user_id=c.getString("in_reply_to_user_id");
+                in_reply_to_screen_name=c.getString("in_reply_to_screen_name");
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     /**

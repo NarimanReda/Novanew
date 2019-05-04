@@ -28,6 +28,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class SignIn extends AppCompatActivity {
 
@@ -95,13 +96,18 @@ public class SignIn extends AppCompatActivity {
         return m.matches();
     }
 
-    private void sharedResponse(String key,String value) {
+    private void sharedResponseString(String key,String value) {
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = m.edit();
         editor.putString(key, value);
         editor.commit();
     }
-
+    private void sharedResponseInt(String key,int value) {
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
 
     /**
      * Connects to the url , sends reuests and gets response
@@ -113,7 +119,6 @@ public class SignIn extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if (response != null) {
-                            Gson gson = new Gson();
                             Log.e("res", response);
                             JSONObject reader = null;
                             String token="";
@@ -195,28 +200,26 @@ public class SignIn extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             Intent i = new Intent(SignIn.this, ProfilePage.class);
-                            sharedResponse("signinname",name);
-                            sharedResponse("screenname",screenname);
-                            i.putExtra("token",token);
-                            i.putExtra("verified",verified);
-                            i.putExtra("location",location);
-                            i.putExtra("bio",bio);
-                            i.putExtra("followerscount",followerscount);
-                            i.putExtra("friendscount",friendscount);
-                            i.putExtra("favoritescount",favoritescount);
-                            i.putExtra("novascount",novascount);
-                            i.putExtra("novasids",NovasIDS);
-                            i.putExtra("favoriteIDs",favoriteIds);
-                            i.putExtra("profileimageurl",profileimageurl);
-                            i.putExtra("defaultprofileimage",default_profile_image);
-                            i.putExtra("id",id);
-                            i.putExtra("name",name);
-                            i.putExtra("email",email);
-                            i.putExtra("password",password);
-                            i.putExtra("screenname",screenname);
-                            i.putExtra("createdat",created_at);
-                            i.putExtra("__v",__v);
-                            i.putExtra("NotifID",notifId);
+                            sharedResponseString("signinname",name);
+                            sharedResponseString("screenname",screenname);
+                            sharedResponseString("signintoken",token);
+                            sharedResponseString("signinlocation",location);
+                            //i.putExtra("verified",verified);
+                            sharedResponseString("signinbio",bio);
+                            sharedResponseInt("signinfollowerscount",followerscount);
+                            sharedResponseInt("signinfriendscount",friendscount);
+                            sharedResponseInt("signinfavoritescount",favoritescount);
+                            sharedResponseInt("signinnovascount",novascount);
+                            //i.putExtra("novasids",NovasIDS);
+                            //i.putExtra("favoriteIDs",favoriteIds);
+                            sharedResponseString("signinprofileimageurl",profileimageurl);
+                            //i.putExtra("defaultprofileimage",default_profile_image);
+                            sharedResponseString("signinid",id);;
+                            sharedResponseString("signinemail",email);
+                            sharedResponseString("signinpassword",password);
+                            sharedResponseString("signincreatedat",created_at);
+                            //i.putExtra("__v",__v);
+                            sharedResponseString("signinNotifID",notifId);
                             i.putExtra("NovasList",NovasList);
                             i.putExtra("FavoritesList",FavoritesList);
                             i.putExtra("MentionsList",MentionsList);

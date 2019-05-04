@@ -3,7 +3,9 @@ package com.example.narim.novaa;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -144,8 +146,10 @@ public class PostTweet extends DialogFragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<String, String>();
                 //map.put("X-Device-Info","Android FOO BAR");
-
-                map.put("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Y2JhMDA5MzliOGIxNDIwMTA4Njc3MDUiLCJzY3JlZW5fbmFtZSI6ImhhbWFkYSIsImlhdCI6MTU1Njk1OTI4Mn0.Whd3erzia_SjRmIcter2skWgvLED_sZx4SyL2hNmHjA");
+                SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(context);
+                String token = m.getString("signintoken", "signintoken");
+                 map.put("token",token);
+                //  map.put("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Y2JhMDA5MzliOGIxNDIwMTA4Njc3MDUiLCJzY3JlZW5fbmFtZSI6ImhhbWFkYSIsImlhdCI6MTU1Njk1OTI4Mn0.Whd3erzia_SjRmIcter2skWgvLED_sZx4SyL2hNmHjA");
                 //map.put("Content-Type", "application/json; charset=UTF-8");
 
                 return map;

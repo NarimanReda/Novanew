@@ -20,12 +20,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ProfilePage extends AppCompatActivity {
-
+    String screenname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +55,11 @@ public class ProfilePage extends AppCompatActivity {
         final String[] NovasList=getIntent().getStringArrayExtra("NovasList");
         final String[] FavoritesList=getIntent().getStringArrayExtra("FavoritesList");
         final String[] MentionsList=getIntent().getStringArrayExtra("MentionsList");*/
-        /*getData();*/
-        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
-        String screenname = m.getString("screenname", "screenname");
-        String name = m.getString("signinname", "name");
 
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        screenname = m.getString("screenname", "screenname");
+        String name = m.getString("signinname", "name");
+        getData();
         final TabLayout ProfilePage_TabLayout = findViewById(R.id.TabLayout_Profile);
         ViewPager ProfilePage_ViewPage = findViewById(R.id.ViewPager_Profile);
         TextView Back=findViewById(R.id.Textview_Profile_Back);
@@ -128,35 +130,26 @@ public class ProfilePage extends AppCompatActivity {
         });
     }
 
+    private void sharedResponseString(String key,String value) {
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+String url="http://3.19.122.178:3000/statuses/user_timeline";
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:3000/statuses/user_timeline",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        JSONObject reader = null;
+                        Log.e("someOtherrrrr", response);
                         try {
-                            Gson gson = new Gson();
-                            Log.e("someOtherrrrr", response);
-                            //Log.e("result",signInResult.getToken());
-                           /*if (wrapper.getStatus()==200) {
-                               SignInResult signInResult= wrapper.getResult();
-                                Log.e("result",signInResult.getToken());
-                            } else {
-                                if(wrapper.getMessage()=="UserNotFound")
-                                {
-                                    Toast.makeText(SignIn.this,"User not found",Toast.LENGTH_LONG).show();
-                                }
-                                else if(wrapper.getMessage()=="IncorrectPassword")
-                                {
-                                    Toast.makeText(SignIn.this,"IncorrectPassword", Toast.LENGTH_LONG).show();
-                                }
-                           }*/
-                        } catch (Exception e) {
-                            //commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
-                            //e.printStackTrace();
-                            Log.e("someOther", response);
+                            reader = new JSONObject(response.toString());
+                            sharedResponseString("response",response);
+                            } catch (Exception e) {
+                             Log.e("someOther", response);
 
-                            //   Log.e("name",wrapper.UserObject.getName());
 
                         }
                     }
@@ -164,14 +157,14 @@ public class ProfilePage extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
+
                     }
                 }) {
 
             @Override
             public byte[] getBody() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<String, String>();
-                params.put("token",getIntent().getStringExtra("token"));
+               // params.put("token",getIntent().getStringExtra("token"));
                 return new JSONObject(params).toString().getBytes();
             }
             @Override
@@ -179,7 +172,19 @@ public class ProfilePage extends AppCompatActivity {
                 return "application/json";
             }
             //---------------------------
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<String, String>();
+                //map.put("X-Device-Info","Android FOO BAR");
+                SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(ProfilePage.this);
+                String token = m.getString("signintoken", "signintoken");
+                String screenname = m.getString("signinscreenname", "signinscreenname");
+               map.put("token",token);
+                map.put("screen_name",screenname);
+                return map;
+            }
         };
+
 
         stringRequest.setRetryPolicy(new RetryPolicy() {
             @Override

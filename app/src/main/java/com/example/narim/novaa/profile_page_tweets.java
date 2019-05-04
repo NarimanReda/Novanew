@@ -3,7 +3,9 @@ package com.example.narim.novaa;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +25,7 @@ public class profile_page_tweets extends android.support.v4.app.Fragment {
     List<Tweets> tweets= new ArrayList<>();
     Context context;
     View view;
+    String response;
     public profile_page_tweets() {
         // Required empty public constructor
     }
@@ -41,13 +44,16 @@ public class profile_page_tweets extends android.support.v4.app.Fragment {
         String RetweetNumber[]={"1","2","3","4"};
         String RepliesNumber[]={"1","2","3","4"};
         String LikesNumber[]={"1","2","3","4"};
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(context);
+        response = m.getString(" response", " response");
+
         for(int i=0; i<Name.length; i++)
         {
             Tweets tweet =new Tweets(Name[i],ScreenName[i],TweetText[i],RetweetNumber[i],RepliesNumber[i],LikesNumber[i]);
             tweets.add(tweet);
         }
         TweetRecView.setLayoutManager(new LinearLayoutManager(context));
-        ProfileTweetsAdapter tweetsAdapter=new ProfileTweetsAdapter(tweets);
+        ProfileTweetsAdapter tweetsAdapter=new ProfileTweetsAdapter(tweets,context);
         TweetRecView.setAdapter(tweetsAdapter);
         return view;
     }
