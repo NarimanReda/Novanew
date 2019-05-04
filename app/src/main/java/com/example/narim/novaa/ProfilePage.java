@@ -1,7 +1,9 @@
 package com.example.narim.novaa;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -27,25 +29,39 @@ public class ProfilePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_page);
+        setContentView(R.layout.activity_profile_page);/*
+        final String token=getIntent().getStringExtra("token");
+        final boolean verified=getIntent().getBooleanExtra("verifed",true);
+        final String Location=getIntent().getStringExtra("location");
+        final String bio=getIntent().getStringExtra("bio");
+        final String followerscount=getIntent().getStringExtra("followerscount");
+        final String favoritesCount=getIntent().getStringExtra("favoritescount");
+        final String Novascount=getIntent().getStringExtra("novascount");
+        final String friendscout=getIntent().getStringExtra("friendscount");
+        final String[]NovasIds=getIntent().getStringArrayExtra("novasids");
+        final String[]FavoritesIds=getIntent().getStringArrayExtra("favoriteIDs");
+        final String profileImageUrl=getIntent().getStringExtra("profileimageurl");
+        final boolean defaultprofileimage=getIntent().getBooleanExtra("defaultprofileimage",true);
         final String name= getIntent().getStringExtra("name");
-        final String id= getIntent().getStringExtra("id");
-        final String followerscount=getIntent().getStringExtra("followersCount");
-        final String favoritesCount=getIntent().getStringExtra("favoritesCount");
-        final String Novascount=getIntent().getStringExtra("novasCount");
+        final int id= getIntent().getIntExtra("id",0);
         final String email=getIntent().getStringExtra("email");
         final String screenname=getIntent().getStringExtra("screenname");
-        final String verified=getIntent().getStringExtra("verified");
-        final String friendscout=getIntent().getStringExtra("friendsCount");
-        final String novascount=getIntent().getStringExtra("Novascount");
-        final String token=getIntent().getStringExtra("token");
-        getData();
+        final String password=getIntent().getStringExtra("password");
+        final String createdat=getIntent().getStringExtra("createdat");
+        final int __v=getIntent().getIntExtra("__v",0);
+        final String notifID=getIntent().getStringExtra("notifID");
+        final String[] NovasList=getIntent().getStringArrayExtra("NovasList");
+        final String[] FavoritesList=getIntent().getStringArrayExtra("FavoritesList");
+        final String[] MentionsList=getIntent().getStringArrayExtra("MentionsList");*/
+        /*getData();*/
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        String screenname = m.getString("screenname", "screenname");
+        String name = m.getString("signinname", "name");
+
         final TabLayout ProfilePage_TabLayout = findViewById(R.id.TabLayout_Profile);
         ViewPager ProfilePage_ViewPage = findViewById(R.id.ViewPager_Profile);
         TextView Back=findViewById(R.id.Textview_Profile_Back);
-
         ProfilePage_Adapter adapter = new ProfilePage_Adapter(getSupportFragmentManager());
-
         adapter.AddFragment("one", new profile_page_tweets());
         adapter.AddFragment("two", new profile_page_retweets());
         adapter.AddFragment("three", new profile_page_likes());
@@ -62,6 +78,10 @@ public class ProfilePage extends AppCompatActivity {
         Button Following = findViewById(R.id.Button_Profile_Following);
         Button Followers = findViewById(R.id.Button_Profile_Followers);
         TextView SignOut=findViewById(R.id.Textview_Profile_SignOut);
+        TextView ScreenName=findViewById(R.id.TextView_Profile_Name);
+        TextView UserName=findViewById(R.id.TextView_Profile_UserName);
+        ScreenName.setText(screenname);
+        UserName.setText(name);
 
         SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,8 +136,6 @@ public class ProfilePage extends AppCompatActivity {
 
                         try {
                             Gson gson = new Gson();
-                            SignInResponse wrapper = gson.fromJson(response, SignInResponse.class);
-                            SignInResult signInResult= wrapper.getUser();
                             Log.e("someOtherrrrr", response);
                             //Log.e("result",signInResult.getToken());
                            /*if (wrapper.getStatus()==200) {

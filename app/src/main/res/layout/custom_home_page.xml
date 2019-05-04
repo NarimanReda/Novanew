@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomePage"
+    android:background="@color/lightgrey">
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout_Home_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+
+
+        <TextView
+            android:id="@+id/Textview_HomePage_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/fallingskybd"
+            android:text="@string/Home"
+            android:textColor="@color/black"
+            android:textSize="30dp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/image_Home_Photo"
+            android:background="@drawable/profilepicture" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="12dp"
+            android:id="@+id/Icon_Home_PostTweet"
+            android:src="@drawable/ic_mode_edit_black_24dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:id="@+id/RelativeLayout_Home_Tweets"
+        android:layout_below="@+id/RelativeLayout_Home_Bar">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/RecyclerView_Home_Tweets">
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/RelativeLayout_Home_Tabs"
+        android:background="@color/lightgrey">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_home_black_24dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:id="@+id/Icon_Home_Home"
+            android:layout_alignParentLeft="true"></ImageView>
+        <LinearLayout
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:id="@+id/Linearlayout1"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/Icon_Home_Home"
+            ></LinearLayout>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_search_black_24dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/Icon_Home_Search"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@id/Linearlayout1"
+            ></ImageView>
+        <LinearLayout
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:id="@+id/Linearlayout2"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/Icon_Home_Search"
+            ></LinearLayout>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/ic_notifications_black_24dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/Icon_Home_Notifs"
+            android:layout_toRightOf="@id/Linearlayout2"></ImageView>
+        <LinearLayout
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/grey"
+            android:id="@+id/Linearlayout3"
+            android:orientation="vertical"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/Icon_Home_Notifs"
+            ></LinearLayout>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_person_black_24dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/Icon_Home_Profile"
+            android:layout_toRightOf="@id/Linearlayout3"
+            android:layout_marginLeft="30dp"></ImageView>
+    </RelativeLayout>
+</RelativeLayout>
