@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
@@ -22,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -36,6 +38,7 @@ Button tweet;
 TextView cancel;
 EditText tweettext;
 
+
     public PostTweet() {
         // Required empty public constructor
     }
@@ -44,6 +47,7 @@ EditText tweettext;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         view= inflater.inflate(R.layout.posttweet, container, false);
         tweet=view.findViewById(R.id.textview_posttweet_tweet);
         tweettext=view.findViewById(R.id.EditText_Posttweet);
@@ -54,11 +58,10 @@ EditText tweettext;
             public void onClick(View view) {
                 if (tweettext.getText().toString().isEmpty())
                     Toast.makeText(context,"Your Nova is empty!", Toast.LENGTH_LONG).show();
-                else
+                else {
                     getData();
-                    dismiss();
 
-
+                }
             }
         });
 
@@ -85,46 +88,50 @@ EditText tweettext;
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         try {
                             Gson gson = new Gson();
-                             Log.e("someOtherrrrr", response);
-                            //Log.e("result",signInResult.getToken());
-                           /*if (wrapper.getStatus()==200) {
-                               SignInResult signInResult= wrapper.getResult();
-                                Log.e("result",signInResult.getToken());
-                            } else {
-                                if(wrapper.getMessage()=="UserNotFound")
-                                {
-                                    Toast.makeText(SignIn.this,"User not found",Toast.LENGTH_LONG).show();
-                                }
-                                else if(wrapper.getMessage()=="IncorrectPassword")
-                                {
-                                    Toast.makeText(SignIn.this,"IncorrectPassword", Toast.LENGTH_LONG).show();
-                                }
-                           }*/
+                             Log.e("Response:", response);
                         } catch (Exception e) {
-                            //commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
-                            //e.printStackTrace();
-                            Log.e("someOther", response);
-
-                            //   Log.e("name",wrapper.UserObject.getName());
 
                         }
+                        dismiss();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
-                    }
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.data != null) {
+                            String jsonError = new String(networkResponse.data);
+                            JSONObject JO = null;
+                            try {
+                                JO = new JSONObject(jsonError);
+                                String msg = JO.getString("msg");
+                              //  Toast.makeText(SignUp.this, msg, Toast.LENGTH_LONG).show();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            dismiss();
+                            Log.e("errormessage", jsonError);
+                        }
+
+
+
+
+
+
+
+                        }
                 }) {
 
             @Override
             public byte[] getBody() throws AuthFailureError
             {
                 HashMap<String, String> params = new HashMap<String, String>();
-                params.put("text",tweettext.getText().toString());
+                params.put("text","dinadina");
+               // params.put("in_reply_to status_id",null);
+                //params.put("media_ids",null);
                 return new JSONObject(params).toString().getBytes();
             }
             @Override

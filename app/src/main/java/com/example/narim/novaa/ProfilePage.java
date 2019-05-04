@@ -1,7 +1,9 @@
 package com.example.narim.novaa;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +29,7 @@ public class ProfilePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_page);
+        setContentView(R.layout.activity_profile_page);/*
         final String token=getIntent().getStringExtra("token");
         final boolean verified=getIntent().getBooleanExtra("verifed",true);
         final String Location=getIntent().getStringExtra("location");
@@ -50,10 +52,11 @@ public class ProfilePage extends AppCompatActivity {
         final String notifID=getIntent().getStringExtra("notifID");
         final String[] NovasList=getIntent().getStringArrayExtra("NovasList");
         final String[] FavoritesList=getIntent().getStringArrayExtra("FavoritesList");
-        final String[] MentionsList=getIntent().getStringArrayExtra("MentionsList");
+        final String[] MentionsList=getIntent().getStringArrayExtra("MentionsList");*/
         /*getData();*/
-        Log.e("name",name);
-        Log.e("screenname",screenname);
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        String screenname = m.getString("screenname", "screenname");
+        String name = m.getString("signinname", "name");
 
         final TabLayout ProfilePage_TabLayout = findViewById(R.id.TabLayout_Profile);
         ViewPager ProfilePage_ViewPage = findViewById(R.id.ViewPager_Profile);

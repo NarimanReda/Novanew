@@ -1,7 +1,9 @@
 package com.example.narim.novaa;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -93,6 +95,13 @@ public class SignIn extends AppCompatActivity {
         return m.matches();
     }
 
+    private void sharedResponse(String key,String value) {
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
 
     /**
      * Connects to the url , sends reuests and gets response
@@ -100,6 +109,7 @@ public class SignIn extends AppCompatActivity {
     private void getData(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:3000/accounts/signin",
                 new Response.Listener<String>() {
+
                     @Override
                     public void onResponse(String response) {
                         if (response != null) {
@@ -185,6 +195,8 @@ public class SignIn extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             Intent i = new Intent(SignIn.this, ProfilePage.class);
+                            sharedResponse("signinname",name);
+                            sharedResponse("screenname",screenname);
                             i.putExtra("token",token);
                             i.putExtra("verified",verified);
                             i.putExtra("location",location);
@@ -229,7 +241,6 @@ public class SignIn extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             Log.e("errormessage",jsonError);
-
                         }
                     }
                 }) {

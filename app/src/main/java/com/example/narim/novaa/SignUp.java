@@ -1,7 +1,9 @@
 package com.example.narim.novaa;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -179,6 +181,7 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
+
     /**
      * @param savedInstanceState
      */
@@ -227,6 +230,12 @@ public class SignUp extends AppCompatActivity {
 
     }
 
+    private void sharedResponse(String key,String value) {
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
     /**
      * Connects to the url , sends reuests and gets response
      */
@@ -236,13 +245,14 @@ public class SignUp extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if (response != null) {
-                            Gson gson = new Gson();
+                           // Gson gson = new Gson();
                             Log.e("res", response);
                             JSONObject reader = null;
                             try {
                                 reader = new JSONObject(response.toString());
                                 JSONObject user = reader.getJSONObject("user");
                                 String name = user.getString("name");
+                                sharedResponse("signupname",name);
                                 if(name!=null)
                                 {
                                     Toast.makeText(SignUp.this,"Check email for verification then Sign In",Toast.LENGTH_LONG).show();
