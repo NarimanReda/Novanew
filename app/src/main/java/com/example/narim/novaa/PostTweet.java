@@ -27,16 +27,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PostTweet extends DialogFragment {
-View view;
-Context context;
-Button tweet;
-TextView cancel;
-EditText tweettext;
+    View view;
+    Context context;
+    Button tweet;
+    TextView cancel;
+    EditText tweettext;
 
 
     public PostTweet() {
@@ -90,7 +91,7 @@ EditText tweettext;
                     public void onResponse(String response) {
                         try {
                             Gson gson = new Gson();
-                             Log.e("Response:", response);
+                            Log.e("Response:", response);
                         } catch (Exception e) {
 
                         }
@@ -107,7 +108,7 @@ EditText tweettext;
                             try {
                                 JO = new JSONObject(jsonError);
                                 String msg = JO.getString("msg");
-                              //  Toast.makeText(SignUp.this, msg, Toast.LENGTH_LONG).show();
+                                //  Toast.makeText(SignUp.this, msg, Toast.LENGTH_LONG).show();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -122,7 +123,7 @@ EditText tweettext;
 
 
 
-                        }
+                    }
                 }) {
 
             @Override
@@ -130,7 +131,7 @@ EditText tweettext;
             {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("text","dinadina");
-               // params.put("in_reply_to status_id",null);
+                // params.put("in_reply_to status_id",null);
                 //params.put("media_ids",null);
                 return new JSONObject(params).toString().getBytes();
             }
@@ -139,6 +140,16 @@ EditText tweettext;
                 return "application/json";
             }
             //---------------------------
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<String, String>();
+                //map.put("X-Device-Info","Android FOO BAR");
+
+                map.put("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Y2JhMDA5MzliOGIxNDIwMTA4Njc3MDUiLCJzY3JlZW5fbmFtZSI6ImhhbWFkYSIsImlhdCI6MTU1Njk1OTI4Mn0.Whd3erzia_SjRmIcter2skWgvLED_sZx4SyL2hNmHjA");
+                //map.put("Content-Type", "application/json; charset=UTF-8");
+
+                return map;
+            }
         };
 
         stringRequest.setRetryPolicy(new RetryPolicy() {

@@ -53,8 +53,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         PostTweet = findViewById(R.id.Icon_Home_PostTweet);
         TweetRecView = findViewById(R.id.RecyclerView_Home_Tweets);
          nav_photo_opener = findViewById(R.id.image_Home_Photo);
-         drawer = findViewById(R.id.drawer_layout);
-        NavigationView nav_view = findViewById(R.id.nav_view);
+      //   drawer = findViewById(R.id.drawer_layout);
+      //  NavigationView nav_view = findViewById(R.id.nav_view);
 
         String Name[] = {"Dina Walid", "Menna Walid", "Arwa Walid", "Ziad Walid"};
         String ScreenName[] = {"dinawalid", "mennawalid", "arwawalid", "ziadwalid"};
@@ -125,7 +125,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 }
             }
         });
-        nav_view.setNavigationItemSelectedListener(this);
+        //nav_view.setNavigationItemSelectedListener(this);
 
     }
 
@@ -182,8 +182,8 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
             Intent i =new Intent(HomePage.this,EditProfile.class);
             startActivity(i);
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
