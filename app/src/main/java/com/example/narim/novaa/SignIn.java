@@ -113,7 +113,7 @@ public class SignIn extends AppCompatActivity {
      * Connects to the url , sends reuests and gets response
      */
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:3000/accounts/signin",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:8080/accounts/signin",
                 new Response.Listener<String>() {
 
                     @Override

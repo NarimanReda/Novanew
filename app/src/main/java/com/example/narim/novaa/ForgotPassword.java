@@ -83,7 +83,7 @@ public class ForgotPassword extends AppCompatActivity {
      * Connects to the url , sends reuests and gets response
      */
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:3000/forgotpassword1",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:8080/forgotpassword1",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

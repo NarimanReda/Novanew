@@ -136,7 +136,7 @@ public class ProfilePage extends AppCompatActivity {
         editor.putString(key, value);
         editor.commit();
     }
-String url="http://3.19.122.178:3000/statuses/user_timeline";
+String url="http://3.19.122.178:8080/statuses/user_timeline";
     private void getData(){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {

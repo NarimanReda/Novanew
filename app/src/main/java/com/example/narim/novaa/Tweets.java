@@ -7,8 +7,9 @@ public class Tweets {
     String RepliesNumber;
     String RetweetsNumber;
     String LikesNumber;
-
-    public Tweets(String profileName,String profileScreenName, String tweetText, String repliesNumber, String retweetsNumber,String likesNumber)
+    Boolean Renovad;
+    
+    public Tweets(String profileName,String profileScreenName, String tweetText, String repliesNumber, String retweetsNumber,String likesNumber,Boolean renovad)
     {
         this.ProfileName=profileName;
         this.ProfileScreenName="@" + profileScreenName;
@@ -16,5 +17,6 @@ public class Tweets {
         this.RepliesNumber=repliesNumber;
         this.RetweetsNumber=retweetsNumber;
         this.LikesNumber=likesNumber;
+        this.Renovad=renovad;
     }
 }

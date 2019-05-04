@@ -240,7 +240,7 @@ public class SignUp extends AppCompatActivity {
      * Connects to the url , sends reuests and gets response
      */
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:3000/accounts/signup",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:8080/accounts/signup",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

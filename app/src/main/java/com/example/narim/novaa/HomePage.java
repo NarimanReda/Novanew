@@ -1,8 +1,10 @@
 package com.example.narim.novaa;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -12,14 +14,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HomePage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     ImageView Home;
@@ -33,7 +47,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
     DrawerLayout drawer;
 
     protected void onCreate(Bundle savedInstanceState) {
-        final String name = getIntent().getStringExtra("name");
+       /* final String name = getIntent().getStringExtra("name");
         final String id = getIntent().getStringExtra("id");
         final String followerscount = getIntent().getStringExtra("followersCount");
         final String favoritesCount = getIntent().getStringExtra("favoritesCount");
@@ -43,7 +57,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         final String verified = getIntent().getStringExtra("verified");
         final String friendscout = getIntent().getStringExtra("friendsCount");
         final String novascount = getIntent().getStringExtra("Novascount");
-        final String token = getIntent().getStringExtra("token");
+        final String token = getIntent().getStringExtra("token");*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         Home = findViewById(R.id.Icon_Home_Home);
@@ -62,19 +76,19 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
         String RetweetNumber[] = {"1", "2", "3", "4"};
         String RepliesNumber[] = {"1", "2", "3", "4"};
         String LikesNumber[] = {"1", "2", "3", "4"};
-        for (int i = 0; i < Name.length; i++) {
-            Tweets tweet = new Tweets(Name[i], ScreenName[i], TweetText[i], RetweetNumber[i], RepliesNumber[i], LikesNumber[i]);
+        /*for (int i = 0; i < Name.length; i++) {
+            Tweets tweet = new Tweets(Name[i], ScreenName[i], TweetText[i], RetweetNumber[i], RepliesNumber[i], LikesNumber[i],false);
             tweets.add(tweet);
-        }
+        }*/
         TweetRecView.setLayoutManager(new LinearLayoutManager(HomePage.this));
-        TweetsAdapter tweetsAdapter = new TweetsAdapter(tweets);
+        TweetsAdapter tweetsAdapter = new TweetsAdapter(this);
         TweetRecView.setAdapter(tweetsAdapter);
 
         Profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(HomePage.this, ProfilePage.class);
-                i.putExtra("token", token);
+                /*i.putExtra("token", token);
                 i.putExtra("name", name);
                 i.putExtra("screenname", screenname);
                 i.putExtra("verified", verified);
@@ -83,7 +97,7 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
                 i.putExtra("friendsCount", friendscout);
                 i.putExtra("novasCount", novascount);
                 i.putExtra("id", id);
-                i.putExtra("email", email);
+                i.putExtra("email", email);*/
                 startActivity(i);
                 finish();
 
@@ -189,6 +203,84 @@ public class HomePage extends AppCompatActivity implements NavigationView.OnNavi
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+    private void sharedResponseString(String key,String value) {
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = m.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+    String url="http://3.19.122.178:8080/statuses/timeline";
+    private void getData(){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject reader = null;
+                        Log.e("someOtherrrrr", response);
+                        try {
+                            reader = new JSONObject(response.toString());
+                            sharedResponseString("response",response);
+                        } catch (Exception e) {
+                            Log.e("someOther", response);
+
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<String, String>();
+                // params.put("token",getIntent().getStringExtra("token"));
+                return new JSONObject(params).toString().getBytes();
+            }
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+            //---------------------------
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<String, String>();
+                //map.put("X-Device-Info","Android FOO BAR");
+                SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(HomePage.this);
+                String token = m.getString("signintoken", "signintoken");
+                String screenname = m.getString("signinscreenname", "signinscreenname");
+                map.put("token",token);
+                map.put("screen_name",screenname);
+                return map;
+            }
+        };
+
+
+        stringRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 20 * 1000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 20 * 1000;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+                error.printStackTrace();
+                //commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
+            }
+        });
+
+        VolleySingelton volleySingleton = VolleySingelton.getInstance(this);
+        volleySingleton.getRequestQueue().add(stringRequest);
 
     }
 }

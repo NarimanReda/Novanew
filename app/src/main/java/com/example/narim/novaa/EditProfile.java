@@ -86,7 +86,7 @@ public class EditProfile extends AppCompatActivity {
     };
 
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:3000/accounts/settings",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:8080/accounts/settings",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

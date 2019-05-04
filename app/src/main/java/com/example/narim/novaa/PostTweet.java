@@ -87,7 +87,7 @@ public class PostTweet extends DialogFragment {
         return frag;
     }
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:3000/statuses/update",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://3.19.122.178:8080/statuses/update",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
