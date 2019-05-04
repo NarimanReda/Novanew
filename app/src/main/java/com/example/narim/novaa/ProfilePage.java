@@ -28,38 +28,15 @@ import java.util.Map;
 
 public class ProfilePage extends AppCompatActivity {
     String screenname;
+    String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_page);/*
-        final String token=getIntent().getStringExtra("token");
-        final boolean verified=getIntent().getBooleanExtra("verifed",true);
-        final String Location=getIntent().getStringExtra("location");
-        final String bio=getIntent().getStringExtra("bio");
-        final String followerscount=getIntent().getStringExtra("followerscount");
-        final String favoritesCount=getIntent().getStringExtra("favoritescount");
-        final String Novascount=getIntent().getStringExtra("novascount");
-        final String friendscout=getIntent().getStringExtra("friendscount");
-        final String[]NovasIds=getIntent().getStringArrayExtra("novasids");
-        final String[]FavoritesIds=getIntent().getStringArrayExtra("favoriteIDs");
-        final String profileImageUrl=getIntent().getStringExtra("profileimageurl");
-        final boolean defaultprofileimage=getIntent().getBooleanExtra("defaultprofileimage",true);
-        final String name= getIntent().getStringExtra("name");
-        final int id= getIntent().getIntExtra("id",0);
-        final String email=getIntent().getStringExtra("email");
-        final String screenname=getIntent().getStringExtra("screenname");
-        final String password=getIntent().getStringExtra("password");
-        final String createdat=getIntent().getStringExtra("createdat");
-        final int __v=getIntent().getIntExtra("__v",0);
-        final String notifID=getIntent().getStringExtra("notifID");
-        final String[] NovasList=getIntent().getStringArrayExtra("NovasList");
-        final String[] FavoritesList=getIntent().getStringArrayExtra("FavoritesList");
-        final String[] MentionsList=getIntent().getStringArrayExtra("MentionsList");*/
-
+        setContentView(R.layout.activity_profile_page);
         SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(this);
         screenname = m.getString("screenname", "screenname");
-        String name = m.getString("signinname", "name");
-        getData();
+        name = m.getString("signinname", "name");
+       // getData();
         final TabLayout ProfilePage_TabLayout = findViewById(R.id.TabLayout_Profile);
         ViewPager ProfilePage_ViewPage = findViewById(R.id.ViewPager_Profile);
         TextView Back=findViewById(R.id.Textview_Profile_Back);
@@ -135,18 +112,16 @@ public class ProfilePage extends AppCompatActivity {
         SharedPreferences.Editor editor = m.edit();
         editor.putString(key, value);
         editor.commit();
-    }
-String url="http://3.19.122.178:8080/statuses/user_timeline";
+    };
     private void getData(){
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://3.19.122.178:8080/statuses/user_timeline/dodo",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        JSONObject reader = null;
                         Log.e("someOtherrrrr", response);
                         try {
-                            reader = new JSONObject(response.toString());
-                            sharedResponseString("response",response);
+                           //reader = new JSONObject(response.toString());
+                           sharedResponseString("response",response);
                             } catch (Exception e) {
                              Log.e("someOther", response);
 
@@ -176,11 +151,11 @@ String url="http://3.19.122.178:8080/statuses/user_timeline";
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<String, String>();
                 //map.put("X-Device-Info","Android FOO BAR");
-                SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(ProfilePage.this);
-                String token = m.getString("signintoken", "signintoken");
-                String screenname = m.getString("signinscreenname", "signinscreenname");
-               map.put("token",token);
-                map.put("screen_name",screenname);
+               // SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(ProfilePage.this);
+               // String token = m.getString("signintoken", "signintoken");
+              //  String screenname = m.getString("signinscreenname", "signinscreenname");
+               //map.put("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Y2JhMDA5MzliOGIxNDIwMTA4Njc3MDUiLCJzY3JlZW5fbmFtZSI6ImRvZG8iLCJpYXQiOjE1NTY5ODY4MTl9.HsfrVYwkmtOzXFr491rH04EY_ojuJixcLTRzjU03WZY");
+              // map.put("screen_name",screenname);
                 return map;
             }
         };

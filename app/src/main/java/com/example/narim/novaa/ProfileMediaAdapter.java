@@ -5,67 +5,77 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ProfileMediaAdapter extends RecyclerView.Adapter<ProfileMediaAdapter.myViewHolder>{
     List<Tweets> Tweets;
     Context context;
-    public ProfileMediaAdapter( Context context)
-    {this.Tweets= new ArrayList<>();
-        this.context=context;
-    }
-    SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(context);
-    String response = m.getString(" response", " response");
-    JSONObject reader;
+    String response;
+    public ProfileMediaAdapter(List<Tweets> tweets,Context context)
     {
-        try {
-            reader = new JSONObject(response.toString());
-            JSONArray array=reader.getJSONArray("");
-            Tweets=new ArrayList<>(array.length());
-            for(int i=0; i<array.length(); i++){
-                JSONObject c = array.getJSONObject(i);
-                Tweets.get(i).ProfileName=c.getString("in_reply_to_screen_name");
-                Tweets.get(i).ProfileScreenName=c.getString("in_reply_to_screen_name");
-                Tweets.get(i).TweetText=c.getString("text");
-                Tweets.get(i).RetweetsNumber=String.valueOf(c.getInt("renova_count"));
-                Tweets.get(i).LikesNumber=String.valueOf(c.getInt("favorite_count"));
-                Tweets.get(i).RepliesNumber=String.valueOf(c.getInt("reply_count"));
-                Tweets.get(i).Renovad=c.getBoolean("renovaed");
-                 /*
-                 in_reply_to_status_id= c.getString("in_reply_to_status_id");
-                in_reply_to_user_id=c.getString("in_reply_to_user_id");
-                in_reply_to_screen_name=c.getString("in_reply_to_screen_name");
-                user=c.getString("user");
-                reply_count=c.getInt("reply_count");
-                renova_count=c.getInt("renova_count");
-                favorite_count=c.getInt("favorite_count");
-                renovaed=c.getBoolean("renovaed");
-                _id=c.getString("_id");
-                text=c.getString("text");
-                created_at=c.getString("created_at");
-                user_name=c.getString("user_name");
-                user_screen_name=c.getString("user_screen_name");*/
+        this.context=context;
+        getData();
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(context);
+        response = m.getString("getresponse", "response");
+        Log.e("WOW",response);
+        this.Tweets=new ArrayList<>();
+        {
+            try {
+                JSONObject reader = new JSONObject(response.toString());
+                JSONArray array=reader.getJSONArray("novas");
+                Log.e("array",String.valueOf(array.length()));
+                for(int i=0; i<array.length(); i++){
+                    JSONObject c = array.getJSONObject(i);
+                    com.example.narim.novaa.Tweets tweet = new Tweets("","","","","","","",true);
+                    tweet.Renovad=c.getBoolean("renovaed");
+                    JSONObject entitiesobject=c.getJSONObject("entitiesObject");
+                    JSONObject media=entitiesobject.getJSONObject("media");
+                    String url=media.getString("url");
+                    if(url.isEmpty()==false) {
+                        tweet.ProfileName = c.getString("user_name");
+                        tweet.ProfileScreenName = c.getString("user_screen_name");
+                        tweet.TweetText = c.getString("text");
+                        tweet.id=c.getString("_id");
+                        tweet.RetweetsNumber = String.valueOf(c.getInt("renova_count"));
+                        tweet.LikesNumber = String.valueOf(c.getInt("favorite_count"));
+                        tweet.RepliesNumber = String.valueOf(c.getInt("reply_count"));
+                        tweet.Renovad = c.getBoolean("renovaed");
+                        Tweets.add(tweet);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
+
+
     /**
      * @param viewGroup
      * @param i
-     * @return
      * Set each recycler view item to the given item layout
+     * @return
      */
     @NonNull
     @Override
@@ -78,24 +88,22 @@ public class ProfileMediaAdapter extends RecyclerView.Adapter<ProfileMediaAdapte
     /**
      * @param myViewHolder
      * @param i
-     * Set the Media data in the text views
+     * Set the Tweets data in the text views
      */
     @Override
     public void onBindViewHolder(@NonNull ProfileMediaAdapter.myViewHolder myViewHolder, int i) {
         Tweets tweets= Tweets.get(i);
-        if(tweets.Renovad==false) {
-            myViewHolder.ProfileName.setText(tweets.ProfileName);
-            myViewHolder.ProfileScreenName.setText(tweets.ProfileScreenName);
-            myViewHolder.TweetText.setText(tweets.TweetText);
-            myViewHolder.RetweetsNumber.setText(tweets.RetweetsNumber);
-            myViewHolder.RepliesNumber.setText(tweets.RepliesNumber);
-            myViewHolder.LikesNumber.setText(tweets.LikesNumber);
-        }
+        myViewHolder.ProfileName.setText(tweets.ProfileName);
+        myViewHolder.ProfileScreenName.setText(tweets.ProfileScreenName);
+        myViewHolder.TweetText.setText(tweets.TweetText);
+        myViewHolder.RetweetsNumber.setText(tweets.RetweetsNumber);
+        myViewHolder.RepliesNumber.setText(tweets.RepliesNumber);
+        myViewHolder.LikesNumber.setText(tweets.LikesNumber);
     }
 
     /**
      * @return
-     * This methods return the count of the given Media list
+     * This methods return the count of the given Tweets list
      */
     @Override
     public int getItemCount() {
@@ -121,5 +129,79 @@ public class ProfileMediaAdapter extends RecyclerView.Adapter<ProfileMediaAdapte
             LikesNumber=itemView.findViewById(R.id.Tweet_LikesNumber);
         }
 
+    }
+    private void sharedResponseString(String key,String value) {
+        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = m.edit();
+        editor.putString(key, value);
+        editor.commit();
+    };
+
+    private void getData(){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://3.19.122.178:8080/statuses/user_timeline/dodo",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("someOtherrrrr", response);
+                        try {
+                            //reader = new JSONObject(response.toString());
+                            sharedResponseString("getresponse",response);
+                        } catch (Exception e) {
+                            Log.e("someOther", response);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<String, String>();
+                // params.put("token",getIntent().getStringExtra("token"));
+                return new JSONObject(params).toString().getBytes();
+            }
+            @Override
+            public String getBodyContentType() {
+                return "application/json";
+            }
+            //---------------------------
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> map = new HashMap<String, String>();
+                //map.put("X-Device-Info","Android FOO BAR");
+                // SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(ProfilePage.this);
+                // String token = m.getString("signintoken", "signintoken");
+                //  String screenname = m.getString("signinscreenname", "signinscreenname");
+                //map.put("token","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1Y2JhMDA5MzliOGIxNDIwMTA4Njc3MDUiLCJzY3JlZW5fbmFtZSI6ImRvZG8iLCJpYXQiOjE1NTY5ODY4MTl9.HsfrVYwkmtOzXFr491rH04EY_ojuJixcLTRzjU03WZY");
+                // map.put("screen_name",screenname);
+                return map;
+            }
+        };
+
+
+        stringRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 20 * 1000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 20 * 1000;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+                error.printStackTrace();
+                //commonCallBackInterface.onSuccess("ServicePl_VolleyError", "VolleyError");
+            }
+        });
+
+        VolleySingelton volleySingleton = VolleySingelton.getInstance(context);
+        volleySingleton.getRequestQueue().add(stringRequest);
     }
 }

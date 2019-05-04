@@ -44,16 +44,13 @@ public class profile_page_tweets extends android.support.v4.app.Fragment {
         String RetweetNumber[]={"1","2","3","4"};
         String RepliesNumber[]={"1","2","3","4"};
         String LikesNumber[]={"1","2","3","4"};
-        SharedPreferences m = PreferenceManager.getDefaultSharedPreferences(context);
-        response = m.getString(" response", " response");
-
-        /*for(int i=0; i<Name.length; i++)
+        for(int i=0; i<Name.length; i++)
         {
-            Tweets tweet =new Tweets(Name[i],ScreenName[i],TweetText[i],RetweetNumber[i],RepliesNumber[i],LikesNumber[i],false);
+            Tweets tweet =new Tweets("",Name[i],ScreenName[i],TweetText[i],RetweetNumber[i],RepliesNumber[i],LikesNumber[i],false);
             tweets.add(tweet);
-        }*/
+        }
         TweetRecView.setLayoutManager(new LinearLayoutManager(context));
-        ProfileTweetsAdapter tweetsAdapter=new ProfileTweetsAdapter(context);
+        ProfileTweetsAdapter tweetsAdapter=new ProfileTweetsAdapter(tweets,context);
         TweetRecView.setAdapter(tweetsAdapter);
         return view;
     }

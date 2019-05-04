@@ -8,9 +8,11 @@ public class Tweets {
     String RetweetsNumber;
     String LikesNumber;
     Boolean Renovad;
+    String id;
     
-    public Tweets(String profileName,String profileScreenName, String tweetText, String repliesNumber, String retweetsNumber,String likesNumber,Boolean renovad)
+    public Tweets(String id,String profileName,String profileScreenName, String tweetText, String repliesNumber, String retweetsNumber,String likesNumber,Boolean renovad)
     {
+        this.id=id;
         this.ProfileName=profileName;
         this.ProfileScreenName="@" + profileScreenName;
         this.TweetText=tweetText;

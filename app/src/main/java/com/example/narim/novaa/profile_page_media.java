@@ -41,14 +41,14 @@ public class profile_page_media extends android.support.v4.app.Fragment {
         String RetweetNumber[]={"1","2","3","4"};
         String RepliesNumber[]={"1","2","3","4"};
         String LikesNumber[]={"1","2","3","4"};
-     /*   for(int i=0; i<Name.length; i++)
+        for(int i=0; i<Name.length; i++)
         {
-            Tweets tweet =new Tweets(Name[i],ScreenName[i],TweetText[i],RetweetNumber[i],RepliesNumber[i],LikesNumber[i]);
+            Tweets tweet =new Tweets("",Name[i],ScreenName[i],TweetText[i],RetweetNumber[i],RepliesNumber[i],LikesNumber[i],false);
             tweets.add(tweet);
         }
         TweetRecView.setLayoutManager(new LinearLayoutManager(context));
-        ProfileMediaAdapter tweetsAdapter=new ProfileMediaAdapter(tweets);
-        TweetRecView.setAdapter(tweetsAdapter);*/
+        ProfileMediaAdapter tweetsAdapter=new ProfileMediaAdapter(tweets,context);
+        TweetRecView.setAdapter(tweetsAdapter);
         return view;
     }
 
