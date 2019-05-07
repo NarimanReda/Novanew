@@ -53,6 +53,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(Splash.this,SignIn.class);
+
                 startActivity(intent);
                 finish();
             }
